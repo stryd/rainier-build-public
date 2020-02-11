@@ -1,0 +1,10 @@
+# The docker image has been updated
+image-update:
+        - /image/**/*
+
+docker-update:
+        - /image/Dockerfile
+
+docs:
+        - **/*.md
+        - **/*.txt
