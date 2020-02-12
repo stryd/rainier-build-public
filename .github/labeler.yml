@@ -6,5 +6,5 @@ docker-update:
         - /image/Dockerfile
 
 docs:
-        - **/*.md
-        - **/*.txt
+        - /**/*.md
+        - /**/*.txt
