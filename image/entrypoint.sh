@@ -124,6 +124,8 @@ set -x -e
 "${EXEC:-${DEFAULT_EXEC}}" ${TARGET:+"${TARGET}"} ${POS_USE_ALL:+"$@"}
 ) ; RETVAL=$?
 echo :set-output name=time_end::$(date -u)
+
+# Handle cleanup
 if [ "${RETVAL}" -eq "0" ] ; then
   report_success
 else
