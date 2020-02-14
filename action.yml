@@ -1,0 +1,34 @@
+# Copyright Stryd, Inc. February 2020, All rights reserved.
+
+# An action to support building with the rainier-build tooling
+#
+name: 'Rainier Build'
+description: 'Build tooling, including make and arm-none-eabi-gcc'
+
+inputs:
+  buildtool:
+    description: 'The tool to use to perform the build'
+    required: true
+    default: 'make'
+
+  target:
+    description: 'The target to run on the build'
+    required: false
+
+outputs:
+  time_start:
+    description: 'The time the build started, UTC'
+  time_end:
+    description: 'The time the build ended, UTC'
+  reason:
+    description: 'If there was an issue that stopped the build, state the reason'
+
+runs:
+  using: 'docker'
+  image: 'image/Dockerfile'
+  args:
+    - ${{ inputs.buildtool }} ${{ inputs.target }}
+
+branding:
+  icon: 'package'
+  color: 'orange'
