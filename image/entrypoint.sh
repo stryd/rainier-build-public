@@ -43,6 +43,10 @@ POS_IMPLICIT_OK=true
 # Run the code when we're ready
 DO_RUN=true
 
+# Print lots of extra information
+VERBOSE_LEVEL=1
+ARGS_LIST="$*"
+
 while [ -n "${1:-}" ] ; do
   arg="${1}"
   shift 1
@@ -83,8 +87,19 @@ while [ -n "${1:-}" ] ; do
     POS_IMPLICIT_OK=false
     ;;
 
+    ## --dryrun Print what we would run and stop
     --dryrun | --dry-run )
     DO_RUN=false
+    ;;
+
+    ## --verbose Increase the verbosity
+    -v | --verbose )
+    VERBOSE_LEVEL=$((VERBOSE_LEVEL+1))
+    ;;
+
+    ## --quiet Decrease the verbosity
+    -q | --quiet )
+    VERBOSE_LEVEL=$((VERBOSE_LEVEL-1))
     ;;
 
     # Perform positional argument handling here
@@ -124,6 +139,14 @@ if [ "${POS_FRESH}" = "true" ] ; then
   POS_FRESH=false
 fi
 done
+
+if [ "${VERBOSE_LEVEL}" -gt 0 ] ; then
+  echo "Verbosity: ${VERBOSE_LEVEL}"
+  echo "ARGS LIST: ${ARGS_LIST}"
+  echo "Environment Variables:"
+  export
+  echo "End of Environment Variables"
+fi
 
 RETVAL=0
 if [ "${DO_RUN}" = "true" ] ; then
