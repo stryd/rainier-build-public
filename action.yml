@@ -11,8 +11,8 @@ inputs:
     required: true
     default: 'make'
 
-  target:
-    description: 'The target to run on the build'
+  args:
+    description: 'The args to pass to the build'
     required: false
 
 outputs:
@@ -27,7 +27,7 @@ runs:
   using: 'docker'
   image: 'image/Dockerfile'
   args:
-    - ${{ inputs.buildtool }} ${{ inputs.target }}
+    - ${{ inputs.buildtool }} -- ${{ inputs.args }}
 
 branding:
   icon: 'package'
