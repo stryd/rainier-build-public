@@ -141,7 +141,11 @@ fi
 done
 
 if [ "${VERBOSE_LEVEL}" -gt 0 ] ; then
+  echo "Verbosity: ${VERBOSE_LEVEL}"
   echo "ARGS LIST: ${ARGS_LIST}"
+  echo "Environment Variables:"
+  export
+  echo "End of Environment Variables"
 fi
 
 RETVAL=0
