@@ -33,8 +33,15 @@ POS_NEEDED=
 # init  - a special case to handle the first unspecified positional.
 # multi - we can take a sequence of arguments
 POS_FRESH=init
+
+# Use the remaining argument list verbatim
 POS_USE_ALL=
+
+# Process positional arguments one at a time
 POS_IMPLICIT_OK=true
+
+# Run the code when we're ready
+DO_RUN=true
 
 while [ -n "${1:-}" ] ; do
   arg="${1}"
@@ -76,6 +83,10 @@ while [ -n "${1:-}" ] ; do
     POS_IMPLICIT_OK=false
     ;;
 
+    --dryrun | --dry-run )
+    DO_RUN=false
+    ;;
+
     # Perform positional argument handling here
     * )
     case "${POS_NEEDED}" in
@@ -114,16 +125,21 @@ if [ "${POS_FRESH}" = "true" ] ; then
 fi
 done
 
-
-# Perform the actual build
-echo :set-output name=time_start::$(date -u)
-REASON=Success
-(
-# Echo the following lines, and terminate on an error
-set -x -e 
-"${EXEC:-${DEFAULT_EXEC}}" ${TARGET:+"${TARGET}"} ${POS_USE_ALL:+"$@"}
-) ; RETVAL=$?
-echo :set-output name=time_end::$(date -u)
+RETVAL=0
+if [ "${DO_RUN}" = "true" ] ; then
+  # Perform the actual build
+  echo :set-output name=time_start::$(date -u)
+  REASON=Success
+  (
+    # Echo the following lines, and terminate on an error
+    set -x -e 
+    "${EXEC:-${DEFAULT_EXEC}}" ${TARGET:+"${TARGET}"} ${POS_USE_ALL:+"$@"}
+  ) ; RETVAL=$?
+  echo :set-output name=time_end::$(date -u)
+else
+  echo "Dryrun Mode.  Would have run:"
+  echo "${EXEC:-${DEFAULT_EXEC}}" ${TARGET:+"${TARGET}"} ${POS_USE_ALL:+"$@"}
+fi
 
 # Handle cleanup
 if [ "${RETVAL}" -eq "0" ] ; then
