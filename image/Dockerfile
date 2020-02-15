@@ -12,8 +12,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Setup our entrypoint
-COPY ./entrypoint.sh /opt/image/entrypoint.sh
-ENTRYPOINT /opt/image/entrypoint.sh
+COPY ./entrypoint.sh /opt/image/entrypoint
+ENV PATH="/opt/image:${PATH}"
 
 LABEL description="The Rainier Build System - arm-none-eabi compatible build suite" \
       version="1.0" \
