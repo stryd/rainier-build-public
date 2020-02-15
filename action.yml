@@ -27,7 +27,8 @@ runs:
   using: 'docker'
   image: 'image/Dockerfile'
   args:
-    - ${{ inputs.buildtool }} -- ${{ inputs.args }}
+    - ${{ inputs.buildtool }}
+    - ${{ inputs.args }}
 
 branding:
   icon: 'package'
