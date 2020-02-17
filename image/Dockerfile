@@ -7,7 +7,7 @@ ENV DOCKER_BASE_IMAGE ${base_image:-unspecified}
 # Install all our dependencies, then blow away our list.
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-       make && \
+       make gcc-arm-none-eabi && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
