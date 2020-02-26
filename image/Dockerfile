@@ -8,6 +8,7 @@ ENV DOCKER_BASE_IMAGE ${base_image:-unspecified}
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         gcc \
+        g++ \
         gcc-arm-none-eabi \
         libnewlib-arm-none-eabi \
         make \
