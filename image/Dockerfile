@@ -11,11 +11,14 @@ RUN apt-get update && \
         g++ \
         gcc-arm-none-eabi \
         libnewlib-arm-none-eabi \
+        libusb-1.0-0 \
         make \
-        python3.6 \
+        python3.7 \
+        python3-pip \
         && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    update-alternatives --install /usr/bin/python3 python /usr/bin/python3.7 1
 
 # Setup our entrypoint
 COPY ./entrypoint.sh /opt/image/entrypoint
