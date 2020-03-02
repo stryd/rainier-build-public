@@ -10,6 +10,7 @@ RUN apt-get update && \
         gcc \
         g++ \
         gcc-arm-none-eabi \
+        jq \
         libnewlib-arm-none-eabi \
         libusb-1.0-0 \
         make \
